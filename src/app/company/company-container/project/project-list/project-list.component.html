@@ -1,0 +1,7 @@
+<h1>Select a Project</h1>
+
+<ul>
+  <li *ngFor="let project of projects" routerLink="./{{ project.referenceId }}">
+    {{ project.name }}
+  </li>
+</ul>
