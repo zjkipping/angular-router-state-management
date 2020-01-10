@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProjectViewComponent } from './project-view/project-view.component';
 import { ProjectContainerComponent } from './project-container.component';
+import { ProjectFormComponent } from '../project-form/project-form.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path: '',
         component: ProjectViewComponent
+      },
+      {
+        path: 'edit',
+        component: ProjectFormComponent
       }
     ]
   }

@@ -1,1 +1,7 @@
 <p>project-form works!</p>
+
+<form [formGroup]="projectForm" (ngSubmit)="submitForm()">
+  <label for="projectName">Project Name</label>
+  <input id="projectName" formControlName="name" />
+  <button>{{ selectedProject ? 'Update' : 'Create' }} Project</button>
+</form>

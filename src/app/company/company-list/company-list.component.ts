@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
-import { companyList } from '@services/company/company.service';
+import { Company, CompanyService } from '@services/company/company.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-company-list',
@@ -8,5 +9,9 @@ import { companyList } from '@services/company/company.service';
   styleUrls: ['./company-list.component.scss']
 })
 export class CompanyListComponent {
-  companies = companyList;
+  companies: Observable<Company[]>;
+
+  constructor(companyService: CompanyService) {
+    this.companies = companyService.companies;
+  }
 }

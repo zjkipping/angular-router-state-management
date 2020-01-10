@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
-import { projectList } from '@services/project/project.service';
+import { Project, ProjectService } from '@services/project/project.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-project-list',
@@ -8,5 +9,9 @@ import { projectList } from '@services/project/project.service';
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent {
-  projects = projectList;
+  projects: Observable<Project[]>;
+
+  constructor(projectService: ProjectService) {
+    this.projects = projectService.projects;
+  }
 }

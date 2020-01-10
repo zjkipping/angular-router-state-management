@@ -7,25 +7,30 @@ export interface Company {
   name: string;
 }
 
-export const companyList: Company[] = [
-  { referenceId: '123abc', name: 'Company 1' },
-  { referenceId: '456def', name: 'Company 2' },
-  { referenceId: '678ghi', name: 'Company 3' },
-  { referenceId: '901jkl', name: 'Company 4' }
-];
-
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
-  private selectedCompanyReferenceId = new BehaviorSubject(null);
+  private companyListData: Company[] = [
+    { referenceId: '123abc', name: 'Company 1' },
+    { referenceId: '456def', name: 'Company 2' },
+    { referenceId: '678ghi', name: 'Company 3' },
+    { referenceId: '901jkl', name: 'Company 4' }
+  ];
+  private companyList = new BehaviorSubject<Company[]>(this.companyListData);
+  private selectedCompanyRefId = new BehaviorSubject<string | null>(null);
+
+  companies: Observable<Company[]>;
+  selectedCompanyReferenceId: Observable<string | null>;
   selectedCompany: Observable<Company | null>;
 
   constructor() {
-    this.selectedCompany = this.selectedCompanyReferenceId.pipe(
+    this.companies = this.companyList.asObservable();
+    this.selectedCompanyReferenceId = this.selectedCompanyRefId.asObservable();
+    this.selectedCompany = this.selectedCompanyRefId.pipe(
       map(refId => {
         if (refId) {
-          return companyList.find(c => c.referenceId === refId);
+          return this.companyListData.find(c => c.referenceId === refId);
         } else {
           return null;
         }
@@ -35,10 +40,10 @@ export class CompanyService {
   }
 
   setSelectedCompany(referenceId: string) {
-    this.selectedCompanyReferenceId.next(referenceId);
+    this.selectedCompanyRefId.next(referenceId);
   }
 
   clearSelectedCompany() {
-    this.selectedCompanyReferenceId.next(null);
+    this.selectedCompanyRefId.next(null);
   }
 }

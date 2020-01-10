@@ -1,7 +1,10 @@
 <h1>Select a Project</h1>
-
 <ul>
-  <li *ngFor="let project of projects" routerLink="./{{ project.referenceId }}">
+  <li
+    *ngFor="let project of projects | async"
+    routerLink="./{{ project.referenceId }}"
+  >
     {{ project.name }}
   </li>
 </ul>
+<a routerLink="./new">New Project</a>

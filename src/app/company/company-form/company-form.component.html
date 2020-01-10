@@ -1,1 +1,7 @@
 <p>company-form works!</p>
+
+<form [formGroup]="companyForm" (ngSubmit)="submitForm()">
+  <label for="companyName">Company Name</label>
+  <input id="companyName" formControlName="name" />
+  <button>{{ selectedCompany ? 'Update' : 'Create' }} Company</button>
+</form>

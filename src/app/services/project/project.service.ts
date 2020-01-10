@@ -7,34 +7,39 @@ export interface Project {
   name: string;
 }
 
-export const projectList: Project[] = [
-  {
-    referenceId: 'ghjghj3123',
-    name: 'Project 1'
-  },
-  {
-    referenceId: '90dfg89dfg',
-    name: 'Project 2'
-  },
-  {
-    referenceId: '898asdzxca',
-    name: 'Project 3'
-  }
-];
-
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  private selectedProjectReferenceId = new BehaviorSubject(null);
+  private projectListData: Project[] = [
+    {
+      referenceId: 'ghjghj3123',
+      name: 'Project 1'
+    },
+    {
+      referenceId: '90dfg89dfg',
+      name: 'Project 2'
+    },
+    {
+      referenceId: '898asdzxca',
+      name: 'Project 3'
+    }
+  ];
+  private projectList = new BehaviorSubject(this.projectListData);
+  private selectedProjectRefId = new BehaviorSubject(null);
 
+  selectedProjectReferenceId: Observable<string | null>;
   selectedProject: Observable<Project | null>;
+  projects: Observable<Project[]>;
 
   constructor() {
-    this.selectedProject = this.selectedProjectReferenceId.pipe(
+    this.selectedProjectReferenceId = this.selectedProjectRefId.asObservable();
+    this.projects = this.projectList.asObservable();
+    this.selectedProject = this.selectedProjectRefId.pipe(
       map(refId => {
         if (refId) {
-          return projectList.find(c => c.referenceId === refId);
+          // would normally be a switchMap to make a call to get the individual project
+          return this.projectListData.find(c => c.referenceId === refId);
         } else {
           return null;
         }
@@ -44,10 +49,10 @@ export class ProjectService {
   }
 
   setSelectedProject(referenceId: string) {
-    this.selectedProjectReferenceId.next(referenceId);
+    this.selectedProjectRefId.next(referenceId);
   }
 
   clearSelectedProject() {
-    this.selectedProjectReferenceId.next(null);
+    this.selectedProjectRefId.next(null);
   }
 }

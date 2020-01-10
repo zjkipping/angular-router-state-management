@@ -1,4 +1,5 @@
 <p>company-list works!</p>
-<ul *ngFor="let company of companies">
+<ul *ngFor="let company of companies | async">
   <li routerLink="./{{ company.referenceId }}">{{ company.name }}</li>
 </ul>
+<a routerLink="./new">New Company</a>
