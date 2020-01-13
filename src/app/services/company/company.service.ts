@@ -39,6 +39,18 @@ export class CompanyService {
     );
   }
 
+  async createCompany(val: Omit<Company, 'referenceId'>) {
+    // real functionality mocked out...
+  }
+
+  async updateCompany(company: Company) {
+    // real functionality mocked out...
+  }
+
+  async deleteCompany(refId: string) {
+    // real functionality mocked out...
+  }
+
   setSelectedCompany(referenceId: string) {
     this.selectedCompanyRefId.next(referenceId);
   }

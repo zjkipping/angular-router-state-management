@@ -48,6 +48,18 @@ export class ProjectService {
     );
   }
 
+  async createProject(val: Omit<Project, 'referenceId'>) {
+    // real functionality mocked out...
+  }
+
+  async updateProject(project: Project) {
+    // real functionality mocked out...
+  }
+
+  async deleteProject(refId: string) {
+    // real functionality mocked out...
+  }
+
   setSelectedProject(referenceId: string) {
     this.selectedProjectRefId.next(referenceId);
   }

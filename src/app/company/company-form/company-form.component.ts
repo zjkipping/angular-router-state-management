@@ -31,10 +31,18 @@ export class CompanyFormComponent implements OnInit {
     });
   }
 
-  submitForm() {
-    console.log('Do something with this company data', {
-      ...this.selectedCompany,
-      ...this.companyForm.value
-    });
+  async submitForm() {
+    try {
+      if (this.selectedCompany) {
+        await this.companyService.updateCompany({
+          ...this.selectedCompany,
+          ...this.companyForm.value
+        });
+      } else {
+        await this.companyService.createCompany(this.companyForm.value);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

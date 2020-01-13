@@ -31,10 +31,18 @@ export class ProjectFormComponent implements OnInit {
     });
   }
 
-  submitForm() {
-    console.log('Do something with this project data', {
-      ...this.selectedProject,
-      ...this.projectForm.value
-    });
+  async submitForm() {
+    try {
+      if (this.selectedProject) {
+        await this.projectService.updateProject({
+          ...this.selectedProject,
+          ...this.projectForm.value
+        });
+      } else {
+        await this.projectService.createProject(this.projectForm.value);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
