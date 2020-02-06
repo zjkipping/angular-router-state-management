@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-
-import { Project, ProjectService } from '@services/project/project.service';
 import { Observable } from 'rxjs';
+
+import { ProjectService } from '@services/project/project.service';
+import { Project } from '@types';
 
 @Component({
   selector: 'app-project-list',

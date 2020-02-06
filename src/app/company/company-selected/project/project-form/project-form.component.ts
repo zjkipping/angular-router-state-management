@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
 
-import { ProjectService, Project } from '@services/project/project.service';
+import { ProjectService } from '@services/project/project.service';
+import { Project } from '@types';
 
 @Component({
   selector: 'app-project-form',

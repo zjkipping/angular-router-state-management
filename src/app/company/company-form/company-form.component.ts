@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
 
-import { CompanyService, Company } from '@services/company/company.service';
+import { CompanyService } from '@services/company/company.service';
+import { Company } from '@types';
 
 @Component({
   selector: 'app-company-form',

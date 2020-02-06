@@ -15,7 +15,8 @@
     "lib": ["es2018", "dom"],
     "paths": {
       "@services/*": ["src/app/services/*"],
-      "@constants/*": ["src/app/constants/*"]
+      "@constants/*": ["src/app/constants/*"],
+      "@types": ["src/app/types.ts"]
     }
   },
   "angularCompilerOptions": {

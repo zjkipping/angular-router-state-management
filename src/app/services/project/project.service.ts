@@ -1,49 +1,28 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
 
-export interface Project {
-  referenceId: string;
-  name: string;
-}
+import { RouterStateService } from '@services/router-state/router-state.service';
+import { projectRouteParamKey } from '@constants/route-params';
+import { Project } from '@types';
+
+import { fetchProjectList, fetchProjectDetails } from './project.mock';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  private projectListData: Project[] = [
-    {
-      referenceId: 'ghjghj3123',
-      name: 'Project 1'
-    },
-    {
-      referenceId: '90dfg89dfg',
-      name: 'Project 2'
-    },
-    {
-      referenceId: '898asdzxca',
-      name: 'Project 3'
-    }
-  ];
-  private projectList = new BehaviorSubject(this.projectListData);
-  private selectedProjectRefId = new BehaviorSubject(null);
-
+  projects: Observable<Project[]>;
   selectedProjectReferenceId: Observable<string | null>;
   selectedProject: Observable<Project | null>;
-  projects: Observable<Project[]>;
 
-  constructor() {
-    this.selectedProjectReferenceId = this.selectedProjectRefId.asObservable();
-    this.projects = this.projectList.asObservable();
-    this.selectedProject = this.selectedProjectRefId.pipe(
-      map(refId => {
-        if (refId) {
-          // would normally be a switchMap to make a call to get the individual project
-          return this.projectListData.find(c => c.referenceId === refId);
-        } else {
-          return null;
-        }
-      }),
+  constructor(routerState: RouterStateService) {
+    this.projects = fetchProjectList();
+    this.selectedProjectReferenceId = routerState.routeParamsMap.pipe(
+      map(params => params.get(projectRouteParamKey))
+    );
+    this.selectedProject = this.selectedProjectReferenceId.pipe(
+      switchMap(refId => fetchProjectDetails(refId)),
       shareReplay(1)
     );
   }
@@ -58,13 +37,5 @@ export class ProjectService {
 
   async deleteProject(refId: string) {
     // real functionality mocked out...
-  }
-
-  setSelectedProject(referenceId: string) {
-    this.selectedProjectRefId.next(referenceId);
-  }
-
-  clearSelectedProject() {
-    this.selectedProjectRefId.next(null);
   }
 }

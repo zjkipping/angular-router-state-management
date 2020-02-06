@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { projectRouteParamKey } from '@constants/route-params';
 import { ProjectListComponent } from './project-list/project-list.component';
-import { ProjectFormComponent } from './project-form/project-form.component';
 
 const routes: Routes = [
   {
@@ -12,13 +11,16 @@ const routes: Routes = [
   },
   {
     path: 'new',
-    component: ProjectFormComponent
+    loadChildren: () =>
+      import('./project-form/project-form.module').then(
+        m => m.ProjectFormModule
+      )
   },
   {
     path: `:${projectRouteParamKey}`,
     loadChildren: () =>
-      import('./project-container/project-container.module').then(
-        m => m.ProjectContainerModule
+      import('./project-selected/project-selected.module').then(
+        m => m.ProjectSelectedModule
       )
   }
 ];

@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { companyRouteParamKey } from '@constants/route-params';
 import { CompanyListComponent } from './company-list/company-list.component';
-import { CompanyFormComponent } from './company-form/company-form.component';
 
 const routes: Routes = [
   {
@@ -12,13 +11,16 @@ const routes: Routes = [
   },
   {
     path: 'new',
-    component: CompanyFormComponent
+    loadChildren: () =>
+      import('./company-form/company-form.module').then(
+        m => m.CompanyFormModule
+      )
   },
   {
     path: `:${companyRouteParamKey}`,
     loadChildren: () =>
-      import('./company-container/company-container.module').then(
-        m => m.CompanyContainerModule
+      import('./company-selected/company-selected.module').then(
+        m => m.CompanySelectedModule
       )
   }
 ];
