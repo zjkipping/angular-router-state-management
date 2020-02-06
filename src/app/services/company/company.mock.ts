@@ -14,6 +14,7 @@ export function fetchCompanyList() {
 }
 
 export function fetchCompanyDetails(referenceId: string | null) {
+  console.log('fetching company: ', referenceId);
   if (referenceId) {
     return of(companyListMockData.find(c => c.referenceId === referenceId));
   } else {

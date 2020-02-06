@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, shareReplay, switchMap } from 'rxjs/operators';
+import {
+  map,
+  shareReplay,
+  switchMap,
+  distinctUntilChanged
+} from 'rxjs/operators';
 
 import { RouterStateService } from '@services/router-state/router-state.service';
 import { companyRouteParamKey } from '@constants/route-params';
@@ -19,7 +24,8 @@ export class CompanyService {
   constructor(routerState: RouterStateService) {
     this.companies = fetchCompanyList();
     this.selectedCompanyReferenceId = routerState.routeParamsMap.pipe(
-      map(params => params.get(companyRouteParamKey))
+      map(params => params.get(companyRouteParamKey)),
+      distinctUntilChanged()
     );
     this.selectedCompany = this.selectedCompanyReferenceId.pipe(
       switchMap(refId => fetchCompanyDetails(refId)),

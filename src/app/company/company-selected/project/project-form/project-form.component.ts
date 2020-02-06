@@ -14,22 +14,20 @@ export class ProjectFormComponent implements OnInit {
   selectedProject: Project | null;
   projectForm: FormGroup;
 
-  constructor(
-    private projectService: ProjectService,
-    private fb: FormBuilder
-  ) {}
+  constructor(private projectService: ProjectService, fb: FormBuilder) {
+    this.projectForm = fb.group({
+      name: fb.control('', Validators.required)
+    });
+  }
 
   async ngOnInit() {
     this.selectedProject = await this.projectService.selectedProject
       .pipe(take(1))
       .toPromise();
 
-    this.projectForm = this.fb.group({
-      name: this.fb.control(
-        this.selectedProject.name || '',
-        Validators.required
-      )
-    });
+    if (this.selectedProject) {
+      this.projectForm.patchValue(this.selectedProject);
+    }
   }
 
   async submitForm() {

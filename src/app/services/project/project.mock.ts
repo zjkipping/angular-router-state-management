@@ -22,6 +22,7 @@ export function fetchProjectList() {
 }
 
 export function fetchProjectDetails(referenceId: string | null) {
+  console.log('fetching project:', referenceId);
   if (referenceId) {
     return of(projectListMockData.find(c => c.referenceId === referenceId));
   } else {

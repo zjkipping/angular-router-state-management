@@ -14,22 +14,20 @@ export class CompanyFormComponent implements OnInit {
   selectedCompany: Company | null;
   companyForm: FormGroup;
 
-  constructor(
-    private companyService: CompanyService,
-    private fb: FormBuilder
-  ) {}
+  constructor(private companyService: CompanyService, fb: FormBuilder) {
+    this.companyForm = fb.group({
+      name: fb.control('', Validators.required)
+    });
+  }
 
   async ngOnInit() {
     this.selectedCompany = await this.companyService.selectedCompany
       .pipe(take(1))
       .toPromise();
 
-    this.companyForm = this.fb.group({
-      name: this.fb.control(
-        this.selectedCompany.name || '',
-        Validators.required
-      )
-    });
+    if (this.companyForm) {
+      this.companyForm.patchValue(this.selectedCompany);
+    }
   }
 
   async submitForm() {
