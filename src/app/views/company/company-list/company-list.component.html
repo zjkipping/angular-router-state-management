@@ -1,0 +1,7 @@
+<h1>Company List</h1>
+<ul>
+  <li *ngFor="let company of companies | async">
+    <a routerLink="./{{ company.referenceId }}">{{ company.name }}</a>
+  </li>
+</ul>
+<a class="button" routerLink="./new">New Company</a>

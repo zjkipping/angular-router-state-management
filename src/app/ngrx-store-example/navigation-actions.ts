@@ -17,6 +17,9 @@ export class NavigationActions {
 
   constructor(actions: Actions) {
     this.routeParams = actions.pipe(
+      // if you need to resolve a route based on a http request downstream of this observable
+      // you will need to use routerNavigationAction
+
       ofType(routerNavigatedAction),
       map(action => action.payload.routerState.root),
       map(route => findAllRouteParams(route)),

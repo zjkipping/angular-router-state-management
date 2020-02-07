@@ -25,7 +25,7 @@ export class CompanyFormComponent implements OnInit {
       .pipe(take(1))
       .toPromise();
 
-    if (this.companyForm) {
+    if (this.selectedCompany) {
       this.companyForm.patchValue(this.selectedCompany);
     }
   }

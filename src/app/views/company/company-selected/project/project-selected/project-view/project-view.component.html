@@ -1,0 +1,10 @@
+<h1>Project View</h1>
+
+<a class="button cancel" routerLink="../../../../">Go Back</a>
+
+<span>Company:</span>
+<pre>{{ company | async | json }}</pre>
+<span>Project:</span>
+<pre>{{ project | async | json }}</pre>
+
+<a class="button edit" routerLink="./edit">Edit Project</a>
