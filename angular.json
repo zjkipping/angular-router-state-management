@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "state-driven-routing": {
@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "state-driven-routing"
+    }
+  },
+  "defaultProject": "state-driven-routing",
+  "cli": {
+    "analytics": "5b1bd28a-dff1-496a-87b5-d1e57dd0800e"
+  }
 }

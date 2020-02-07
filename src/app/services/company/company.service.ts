@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   map,
   shareReplay,
@@ -28,7 +28,7 @@ export class CompanyService {
       distinctUntilChanged()
     );
     this.selectedCompany = this.selectedCompanyReferenceId.pipe(
-      switchMap(refId => fetchCompanyDetails(refId)),
+      switchMap(refId => (refId ? fetchCompanyDetails(refId) : of(null))),
       shareReplay(1)
     );
   }
