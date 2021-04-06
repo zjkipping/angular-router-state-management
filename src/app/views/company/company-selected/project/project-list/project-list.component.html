@@ -1,11 +1,27 @@
 <h1>Project List</h1>
-<a class="button cancel" routerLink="../">Go Back</a>
-<ul>
-  <li
-    *ngFor="let project of projects | async"
-    routerLink="./{{ project.referenceId }}"
-  >
-    {{ project.name }}
-  </li>
-</ul>
+<a class="button success" routerLink="../">Go Back</a>
+
+<div class="project-search-field">
+  <label for="project-search">Search Projects</label>
+  <input
+    id="project-search"
+    type="text"
+    placeholder="Project name"
+    [formControl]="projectSearchControl"
+  />
+</div>
+
+<ng-container *ngIf="projects$ | async as projects; else loadingProject">
+  <ul>
+    <li *ngFor="let project of projects">
+      <a routerLink="./{{ project.id }}">{{ project.name }}</a>
+    </li>
+  </ul>
+  <div *ngIf="projects.length === 0" class="message">No Projects Found...</div>
+</ng-container>
+
+<ng-template #loadingProject>
+  <div class="message">Loading...</div>
+</ng-template>
+
 <a class="button" routerLink="./new">New Project</a>

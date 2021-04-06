@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { CompanyFormComponent } from './company-form.component';
 
@@ -13,9 +13,9 @@ import { CompanyFormComponent } from './company-form.component';
     RouterModule.forChild([
       {
         path: '',
-        component: CompanyFormComponent
-      }
-    ])
-  ]
+        component: CompanyFormComponent,
+      },
+    ]),
+  ],
 })
 export class CompanyFormModule {}

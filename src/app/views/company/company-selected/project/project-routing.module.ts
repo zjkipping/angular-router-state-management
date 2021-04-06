@@ -7,26 +7,26 @@ import { ProjectListComponent } from './project-list/project-list.component';
 const routes: Routes = [
   {
     path: '',
-    component: ProjectListComponent
+    component: ProjectListComponent,
   },
   {
     path: 'new',
     loadChildren: () =>
       import('./project-form/project-form.module').then(
-        m => m.ProjectFormModule
-      )
+        (m) => m.ProjectFormModule
+      ),
   },
   {
     path: `:${projectRouteParamKey}`,
     loadChildren: () =>
       import('./project-selected/project-selected.module').then(
-        m => m.ProjectSelectedModule
-      )
-  }
+        (m) => m.ProjectSelectedModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ProjectRoutingModule {}

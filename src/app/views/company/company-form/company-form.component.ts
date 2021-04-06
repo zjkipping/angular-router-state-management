@@ -1,22 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 
-import { CompanyService } from '@services/company/company.service';
 import { Company } from '@types';
+import { CompanyService } from '@services/company/company.service';
 
 @Component({
   selector: 'app-company-form',
   templateUrl: './company-form.component.html',
-  styleUrls: ['./company-form.component.scss']
+  styleUrls: ['./company-form.component.scss'],
 })
 export class CompanyFormComponent implements OnInit {
   selectedCompany: Company | null;
   companyForm: FormGroup;
 
-  constructor(private companyService: CompanyService, fb: FormBuilder) {
+  constructor(
+    private companyService: CompanyService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    fb: FormBuilder
+  ) {
     this.companyForm = fb.group({
-      name: fb.control('', Validators.required)
+      name: fb.control('', Validators.required),
     });
   }
 
@@ -35,11 +41,14 @@ export class CompanyFormComponent implements OnInit {
       if (this.selectedCompany) {
         await this.companyService.updateCompany({
           ...this.selectedCompany,
-          ...this.companyForm.value
+          ...this.companyForm.value,
         });
       } else {
         await this.companyService.createCompany(this.companyForm.value);
       }
+      await this.router.navigate(['../'], {
+        relativeTo: this.activatedRoute,
+      });
     } catch (error) {
       console.error(error);
     }

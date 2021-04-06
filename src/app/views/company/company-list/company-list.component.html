@@ -1,7 +1,29 @@
 <h1>Company List</h1>
-<ul>
-  <li *ngFor="let company of companies | async">
-    <a routerLink="./{{ company.referenceId }}">{{ company.name }}</a>
-  </li>
-</ul>
+
+<div class="company-search-field">
+  <label for="company-search">Search Companies</label>
+  <input
+    id="company-search"
+    type="text"
+    placeholder="Company name"
+    [formControl]="companySearchControl"
+  />
+</div>
+
+<ng-container *ngIf="companies$ | async as companies; else loadingCompanies">
+  <ul>
+    <li *ngFor="let company of companies">
+      <a routerLink="./{{ company.id }}">{{ company.name }}</a>
+    </li>
+  </ul>
+
+  <div *ngIf="companies.length === 0" class="message">
+    No Companies Found...
+  </div>
+</ng-container>
+
+<ng-template #loadingCompanies>
+  <div class="message">Loading...</div>
+</ng-template>
+
 <a class="button" routerLink="./new">New Company</a>

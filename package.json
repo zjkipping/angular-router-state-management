@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "json-server": "json-server --watch db.json"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +21,9 @@
     "@angular/platform-browser": "~11.1.2",
     "@angular/platform-browser-dynamic": "~11.1.2",
     "@angular/router": "~11.1.2",
+    "@types/lodash-es": "^4.17.4",
+    "json-server": "^0.16.3",
+    "lodash-es": "^4.17.21",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

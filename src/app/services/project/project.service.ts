@@ -1,47 +1,114 @@
+import {
+  HttpClient,
+  HttpParams,
+  HttpParamsOptions,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, merge, Observable, of } from 'rxjs';
 import {
   map,
   shareReplay,
   switchMap,
-  distinctUntilChanged
+  distinctUntilChanged,
+  tap,
+  first,
+  delay,
 } from 'rxjs/operators';
 
+import { CompanyService } from '@services/company/company.service';
 import { RouterStateService } from '@services/router-state/router-state.service';
-import { projectRouteParamKey } from '@constants/route-params';
+import {
+  projectRouteParamKey,
+  projectSearchQueryParamKey,
+} from '@constants/route-params';
 import { Project } from '@types';
 
-import { fetchProjectList, fetchProjectDetails } from './project.mock';
+const apiUrl = '/api/projects';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProjectService {
-  projects: Observable<Project[]>;
-  selectedProjectReferenceId: Observable<string | null>;
+  projectSearchQuery: Observable<string | null>;
+  projects: Observable<Project[] | null>;
+  selectedProjectId: Observable<number | null>;
   selectedProject: Observable<Project | null>;
 
-  constructor(routerState: RouterStateService) {
-    this.projects = fetchProjectList();
-    this.selectedProjectReferenceId = routerState.routeParamsMap.pipe(
-      map(params => params.get(projectRouteParamKey)),
+  private fetchProjects = new BehaviorSubject<void>(null);
+  private fetchSelectedProject = new BehaviorSubject<void>(null);
+
+  constructor(
+    private http: HttpClient,
+    routerState: RouterStateService,
+    companyService: CompanyService
+  ) {
+    this.projectSearchQuery = routerState.queryParamsMap.pipe(
+      map((queryParams) => queryParams.get(projectSearchQueryParamKey))
+    );
+
+    this.projects = combineLatest([
+      companyService.selectedCompanyId,
+      this.projectSearchQuery,
+      this.fetchProjects,
+    ]).pipe(
+      tap(() => console.log('fetching projects')),
+      switchMap(([companyId, query]) =>
+        merge(
+          of(null),
+          this.getProjectsForCompany(companyId, query).pipe(delay(500))
+        )
+      ),
+      shareReplay(1)
+    );
+
+    this.selectedProjectId = routerState.routeParamsMap.pipe(
+      map((params) => Number(params.get(projectRouteParamKey))),
       distinctUntilChanged()
     );
-    this.selectedProject = this.selectedProjectReferenceId.pipe(
-      switchMap(refId => (refId ? fetchProjectDetails(refId) : of(null))),
+
+    this.selectedProject = combineLatest([
+      this.selectedProjectId,
+      this.fetchSelectedProject,
+    ]).pipe(
+      switchMap(([id]) =>
+        id ? merge(of(null), this.getProject(id).pipe(delay(500))) : of(null)
+      ),
       shareReplay(1)
     );
   }
 
-  async createProject(val: Omit<Project, 'referenceId'>) {
-    // real functionality mocked out...
+  private getProjectsForCompany(companyId: number, query: string) {
+    const options: HttpParamsOptions = {
+      fromObject: {
+        companyId: companyId.toString(),
+        ...(query ? { name_like: query } : {}),
+      },
+    };
+    const params = new HttpParams(options);
+    return this.http.get<Project[]>(apiUrl, { params });
+  }
+
+  private getProject(id: number) {
+    return this.http.get<Project>(`${apiUrl}/${id}`);
+  }
+
+  async createProject(projectDetails: Omit<Project, 'id'>) {
+    await this.http.post(apiUrl, projectDetails).pipe(first()).toPromise();
+    this.fetchProjects.next();
   }
 
   async updateProject(project: Project) {
-    // real functionality mocked out...
+    await this.http
+      .put(`${apiUrl}/${project.id}`, project)
+      .pipe(first())
+      .toPromise();
+    this.fetchSelectedProject.next();
+    this.fetchProjects.next();
   }
 
-  async deleteProject(refId: string) {
-    // real functionality mocked out...
+  async deleteSelectedProject() {
+    const id = await this.selectedProjectId.pipe(first()).toPromise();
+    await this.http.delete(`${apiUrl}/${id}`).pipe(first()).toPromise();
+    this.fetchProjects.next();
   }
 }

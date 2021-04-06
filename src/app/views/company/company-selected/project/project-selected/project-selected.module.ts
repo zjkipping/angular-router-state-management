@@ -7,6 +7,6 @@ import { ProjectViewComponent } from './project-view/project-view.component';
 
 @NgModule({
   declarations: [ProjectViewComponent],
-  imports: [CommonModule, ProjectSelectedRoutingModule, ReactiveFormsModule]
+  imports: [CommonModule, ProjectSelectedRoutingModule, ReactiveFormsModule],
 })
 export class ProjectSelectedModule {}

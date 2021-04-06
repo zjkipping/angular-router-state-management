@@ -1,0 +1,102 @@
+{
+  "companies": [
+    {
+      "id": 1,
+      "name": "Company 1"
+    },
+    {
+      "id": 2,
+      "name": "Company 2"
+    },
+    {
+      "id": 3,
+      "name": "Company 3"
+    },
+    {
+      "id": 4,
+      "name": "Company 4"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "companyId": 1,
+      "name": "Project 1"
+    },
+    {
+      "id": 2,
+      "companyId": 1,
+      "name": "Project 2"
+    },
+    {
+      "id": 3,
+      "companyId": 1,
+      "name": "Project 3"
+    },
+    {
+      "id": 4,
+      "companyId": 1,
+      "name": "Project 4"
+    },
+    {
+      "id": 5,
+      "companyId": 2,
+      "name": "Project 1"
+    },
+    {
+      "id": 6,
+      "companyId": 2,
+      "name": "Project 2"
+    },
+    {
+      "id": 7,
+      "companyId": 2,
+      "name": "Project 3"
+    },
+    {
+      "id": 8,
+      "companyId": 2,
+      "name": "Project 4"
+    },
+    {
+      "id": 9,
+      "companyId": 3,
+      "name": "Project 1"
+    },
+    {
+      "id": 10,
+      "companyId": 3,
+      "name": "Project 2"
+    },
+    {
+      "id": 11,
+      "companyId": 3,
+      "name": "Project 3"
+    },
+    {
+      "id": 12,
+      "companyId": 3,
+      "name": "Project 4"
+    },
+    {
+      "id": 13,
+      "companyId": 4,
+      "name": "Project 1"
+    },
+    {
+      "id": 14,
+      "companyId": 4,
+      "name": "Project 2"
+    },
+    {
+      "id": 15,
+      "companyId": 4,
+      "name": "Project 3"
+    },
+    {
+      "id": 16,
+      "companyId": 4,
+      "name": "Project 4"
+    }
+  ]
+}

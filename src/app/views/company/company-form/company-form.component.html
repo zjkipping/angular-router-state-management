@@ -3,11 +3,9 @@
 <form [formGroup]="companyForm" (ngSubmit)="submitForm()">
   <label for="companyName">Company Name</label>
   <input id="companyName" formControlName="name" />
-  <button class="submit">
+  <button class="success">
     {{ selectedCompany ? 'Update' : 'Create' }} Company
   </button>
 </form>
 
-<a class="button cancel" routerLink="../{{ !selectedCompany ? '../' : '' }}">
-  Cancel
-</a>
+<a class="button danger" routerLink="../">Cancel</a>

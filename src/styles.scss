@@ -218,18 +218,18 @@ form {
 }
 
 // some nice background overrides
-button.cancel,
-a.cancel {
+button.danger,
+a.danger {
   background-color: rgb(226, 81, 81);
 }
 
-button.submit,
-a.submit {
+button.success,
+a.success {
   background-color: rgb(57, 158, 57);
 }
 
-button.edit,
-a.edit {
+button.warning,
+a.warning {
   background-color: rgb(202, 183, 75);
 }
 

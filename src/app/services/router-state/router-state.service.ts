@@ -4,32 +4,34 @@ import {
   Router,
   NavigationEnd,
   ActivatedRouteSnapshot,
-  convertToParamMap
+  convertToParamMap,
+  ActivatedRoute,
 } from '@angular/router';
 import { Observable, defer, of, merge } from 'rxjs';
 import { map, filter, shareReplay } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RouterStateService {
   routeParamsMap: Observable<ParamMap>;
+  queryParamsMap: Observable<ParamMap>;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     this.routeParamsMap = merge(
-      defer(() => of(this.getRouteParamSnapshot())),
+      defer(() =>
+        of(findAllRouteParams(this.router.routerState.snapshot.root))
+      ),
       router.events.pipe(
-        filter(event => event instanceof NavigationEnd),
-        map(() => this.getRouteParamSnapshot())
+        filter((event) => event instanceof NavigationEnd),
+        map(() => findAllRouteParams(this.router.routerState.snapshot.root))
       )
     ).pipe(
-      map(params => convertToParamMap(params)),
+      map((params) => convertToParamMap(params)),
       shareReplay(1)
     );
-  }
 
-  getRouteParamSnapshot() {
-    return findAllRouteParams(this.router.routerState.snapshot.root);
+    this.queryParamsMap = this.activatedRoute.queryParamMap;
   }
 }
 
@@ -39,7 +41,7 @@ function findAllRouteParams(
 ) {
   const updatedParams = {
     ...routeParams,
-    ...state.params
+    ...state.params,
   };
 
   if (state.firstChild) {

@@ -1,5 +1,12 @@
 <h1>Company View</h1>
-<a class="button cancel" routerLink="../../">Go Back</a>
-<pre>{{ company | async | json }}</pre>
-<a class="button edit" routerLink="./edit">Edit Company</a>
+<a class="button success" routerLink="../../">Go Back</a>
+
+<ng-container *ngIf="company$ | async as company; else loadingCompany">
+  <pre>{{ company | json }}</pre>
+</ng-container>
+
+<ng-template #loadingCompany>Loading...</ng-template>
+
+<button class="button danger" (click)="deleteCompany()">Delete Company</button>
+<a class="button warning" routerLink="./edit">Edit Company</a>
 <a class="button" routerLink="./projects">View Projects</a>

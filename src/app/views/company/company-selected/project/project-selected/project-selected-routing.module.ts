@@ -6,19 +6,19 @@ import { ProjectViewComponent } from './project-view/project-view.component';
 const routes: Routes = [
   {
     path: '',
-    component: ProjectViewComponent
+    component: ProjectViewComponent,
   },
   {
     path: 'edit',
     loadChildren: () =>
       import('../project-form/project-form.module').then(
-        m => m.ProjectFormModule
-      )
-  }
+        (m) => m.ProjectFormModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ProjectSelectedRoutingModule {}

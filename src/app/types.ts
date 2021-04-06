@@ -1,9 +1,10 @@
 export interface Company {
-  referenceId: string;
+  id: string;
   name: string;
 }
 
 export interface Project {
-  referenceId: string;
+  id: string;
+  companyId: string;
   name: string;
 }

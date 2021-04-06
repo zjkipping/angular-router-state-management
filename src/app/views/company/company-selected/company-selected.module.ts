@@ -7,6 +7,6 @@ import { CompanySelectedRoutingModule } from './company-selected-routing.module'
 
 @NgModule({
   declarations: [CompanyViewComponent],
-  imports: [CommonModule, CompanySelectedRoutingModule, ReactiveFormsModule]
+  imports: [CommonModule, CompanySelectedRoutingModule, ReactiveFormsModule],
 })
 export class CompanySelectedModule {}
