@@ -8,6 +8,6 @@
   </button>
 </form>
 
-<a class="button cancel" routerLink="../../{{ selectedCompany ? '../' : '' }}"
-  >Cancel</a
->
+<a class="button cancel" routerLink="../{{ !selectedCompany ? '../' : '' }}">
+  Cancel
+</a>
