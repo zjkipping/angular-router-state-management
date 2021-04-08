@@ -1,5 +1,5 @@
 {
-  "name": "state-driven-routing",
+  "name": "router-state-management",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

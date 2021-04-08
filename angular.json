@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "state-driven-routing": {
+    "router-state-management": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/state-driven-routing",
+            "outputPath": "dist/router-state-management",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "state-driven-routing:build"
+            "browserTarget": "router-state-management:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "state-driven-routing:build:production"
+              "browserTarget": "router-state-management:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "state-driven-routing:build"
+            "browserTarget": "router-state-management:build"
           }
         },
         "test": {
@@ -104,16 +104,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "state-driven-routing:serve"
+            "devServerTarget": "router-state-management:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "state-driven-routing:serve:production"
+              "devServerTarget": "router-state-management:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "state-driven-routing"
+  "defaultProject": "router-state-management"
 }
